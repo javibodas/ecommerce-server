@@ -1,0 +1,39 @@
+version: '3.5'
+services:
+    postgresql:
+      image: postgres
+      container_name: ecommerce-postgres
+      environment:
+        POSTGRES_USER: ${DB_USER}
+        POSTGRES_PASSWORD: ${DB_PASS}
+      ports:
+        - "5432:5432"
+      volumes:
+        - "./data/postgresql:/docker-entrypoint-initdb.d/"
+      networks:
+        - ecommerce_developers
+    
+    app:
+        build:
+          context: ./docker
+          dockerfile: app.Dockerfile
+        container_name: ecommerce-service
+        working_dir: /usr/src/app
+        volumes:
+          - ${ECOMMERCE_VOLUME_APP}:/usr/src/app
+        ports:
+            - "3000:3000"
+        networks:
+          - ecommerce_developers
+        environment:
+          DB_HOST: ${DB_HOST}
+          DB_NAME: ${DB_NAME}
+          DB_USER: ${DB_USER}
+          DB_PASS: ${DB_PASS}
+          DB_PORT: 5432
+        depends_on: 
+          - postgresql
+
+networks:
+  ecommerce_developers:
+    external: true
