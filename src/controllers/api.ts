@@ -1,9 +1,6 @@
-import { Application, Request, Response } from "express";
-
-import CoursesData from "../../data/courses.json";
+import { Application } from "express";
+import { healthCheck } from "../apps/shared/controllers/StatusController";
 
 export const loadApiEndpoints = (app: Application): void => {
-  app.get("/api", (req: Request, res: Response) => {
-    return res.status(200).send(CoursesData);
-  });
+  app.get("/api/v1/healthcheck", healthCheck)
 };
