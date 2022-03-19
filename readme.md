@@ -15,7 +15,13 @@
 # install dependencies
 npm install
 
-# run in dev mode on port 3000
+# run in dev mode
+sh start_environment.sh app
+
+# stop app
+sh stop_environment.sh app
+
+# run in dev mode with elastic
 sh start_environment.sh
 ```
 
