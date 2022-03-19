@@ -1,0 +1,21 @@
+services:
+  api.route.mooc.users.getUser:
+    class: 'apps/mooc/controllers/User/GetUserController'
+    arguments: ['@service.mooc.getUser']
+    tags:
+      - { name: private-controller }
+  api.route.mooc.users.createUser:
+    class: 'apps/mooc/controllers/User/CreateUserController'
+    arguments: ['@service.mooc.createUser']
+    tags:
+      - { name: public-controller }
+  api.route.mooc.users.deleteUser:
+    class: 'apps/mooc/controllers/User/DeleteUserController'
+    arguments: ['@service.mooc.deleteUser']
+    tags:
+      - { name: private-controller }
+  api.route.mooc.users.updateUser:
+    class: 'apps/mooc/controllers/User/UpdateUserController'
+    arguments: ['@service.mooc.updateUser']
+    tags:
+      - { name: private-controller }

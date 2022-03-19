@@ -1,9 +1,11 @@
-import request from "supertest"
-
-import app from "../../../src/app"
+import TestSuite from '../../TestSuite'
 
 describe("GET /api/v1/healthcheck", () => {
-  it("should return 200 OK", () => {
-    return request(app).get("/api/v1/healthcheck").expect(200);
-  })
+
+  it("should return 200 OK", async () => {
+	  await TestSuite.asyncGetRequest(
+	   '/api/v1/healthcheck',
+       200
+	  )
+	}) 
 })

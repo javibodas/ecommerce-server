@@ -1,7 +1,3 @@
-# TypeScript Express API Bootstrap (base / project starter)
-
-This is a repository intended to serve as a starting point if you want to bootstrap a express API project in TypeScript.
-
 ## Features
 
 - [TypeScript](https://www.typescriptlang.org/) (v4)
@@ -20,13 +16,7 @@ This is a repository intended to serve as a starting point if you want to bootst
 npm install
 
 # run in dev mode on port 3000
-npm run dev
-
-# generate production build
-npm run build
-
-# run generated content in dist folder on port 3000
-npm run start
+sh start_environment.sh
 ```
 
 ## Testing

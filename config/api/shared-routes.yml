@@ -1,0 +1,11 @@
+services:
+  api.route.healthcheck:
+    class: 'apps/shared/controllers/StatusController'
+    tags:
+      - { name: public-controller }
+  
+  api.route.oauth:
+    class: 'apps/shared/controllers/auth/AuthController'
+    arguments: ['@service.mooc.getUserByCriteria', '@logger']
+    tags:
+      - { name: public-controller }

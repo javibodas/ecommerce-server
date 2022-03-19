@@ -1,6 +1,7 @@
 version: '3.5'
 services:
     postgresql:
+      profiles: ["app", "all"]
       image: postgres
       container_name: ecommerce-postgres
       environment:
@@ -9,30 +10,70 @@ services:
       ports:
         - "5432:5432"
       volumes:
-        - "./data/postgresql:/docker-entrypoint-initdb.d/"
+        - "./data/postgresql:/docker-entrypoint-initdb.d"
       networks:
         - ecommerce_developers
     
+    elastic:
+      profiles: ["all"]
+      image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
+      container_name: ecommerce-elastic
+      environment:
+        - discovery.type=single-node
+      ports:
+        - "9200:9200"
+      networks:
+       - ecommerce_developers
+
+    logstash:
+      profiles: ["all"]
+      image: docker.elastic.co/logstash/logstash:7.15.2
+      container_name: ecommerce-logstash
+      ports:
+        - "9600:9600"
+      depends_on: ["elastic"]
+      volumes:
+        - "./config/logstash/pipeline:/usr/share/logstash/pipeline"
+        - "./logs:/logs"
+      networks:
+       - ecommerce_developers
+    
+    kibana:
+      profiles: ["all"]
+      image: docker.elastic.co/kibana/kibana:7.15.2
+      container_name: ecommerce-kibana
+      ports:
+        - "5601:5601"
+      depends_on: ["elastic"]
+      environment:
+        ELASTICSEARCH_HOSTS: '["http://ecommerce-elastic:9200"]'
+      networks:
+       - ecommerce_developers
+
     app:
-        build:
-          context: ./docker
-          dockerfile: app.Dockerfile
-        container_name: ecommerce-service
-        working_dir: /usr/src/app
-        volumes:
-          - ${ECOMMERCE_VOLUME_APP}:/usr/src/app
-        ports:
-            - "3000:3000"
-        networks:
-          - ecommerce_developers
-        environment:
-          DB_HOST: ${DB_HOST}
-          DB_NAME: ${DB_NAME}
-          DB_USER: ${DB_USER}
-          DB_PASS: ${DB_PASS}
-          DB_PORT: 5432
-        depends_on: 
-          - postgresql
+      profiles: ["app","all"]
+      build:
+        context: ./docker
+        dockerfile: app.Dockerfile
+      container_name: ecommerce-service
+      working_dir: /usr/src/app
+      volumes:
+        - ${ECOMMERCE_VOLUME_APP}:/usr/src/app
+      ports:
+        - ${SERVER_PORT}:${SERVER_PORT}
+      networks:
+        - ecommerce_developers
+      environment:
+        DB_HOST: ${DB_HOST}
+        DB_NAME: ${DB_NAME}
+        DB_USER: ${DB_USER}
+        DB_PASS: ${DB_PASS}
+        DB_PORT: 5432
+        ENV: ${NODE_ENV}
+        TOKEN_SECRET: ${TOKEN_SECRET}
+        API_PATH_ROUTE: ${API_PATH_ROUTE}
+        SERVER_PORT: ${SERVER_PORT}
+      depends_on: ["postgresql"]
 
 networks:
   ecommerce_developers:

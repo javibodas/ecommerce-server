@@ -1,0 +1,10 @@
+services:
+  uuidhelper:
+    class: 'contexts/shared/domain/UuidHelper'
+  database:
+    class: 'Database'
+    arguments: ['%env(DB_USER)%', '%env(DB_HOST)%', '%env(DB_NAME)%', '%env(DB_PASS)%', '%env(DB_PORT)%']
+  
+  logger:
+    class: 'contexts/shared/infrastructure/WinstonLogger'
+  

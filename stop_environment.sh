@@ -1,1 +1,1 @@
-docker-compose -f docker-compose.yml down
+docker-compose --profile $1 -f docker-compose.yml down

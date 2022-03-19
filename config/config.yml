@@ -1,0 +1,7 @@
+imports:
+    - { resource: services/shared.yml }
+    - { resource: services/repositories.yml }
+    - { resource: services/mooc.yml }
+    - { resource: api/middlewares.yml }
+    - { resource: api/mooc-routes.yml }
+    - { resource: api/shared-routes.yml }

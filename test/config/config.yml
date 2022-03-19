@@ -1,0 +1,13 @@
+imports:
+     - { resource: ../../config/services/mooc.yml }
+     - { resource: ../../config/api/middlewares.yml }
+     - { resource: ../../config/api/mooc-routes.yml }
+     - { resource: ../../config/api/shared-routes.yml }
+	
+services:
+  service.mooc.postgreUserRepo:
+    class: '../test/mocks/services/TestUserRepository'
+  logger:
+    class: 'contexts/shared/infrastructure/WinstonLogger'
+  uuidhelper:
+    class: '../test/mocks/services/TestUuuidHelper'

@@ -1,0 +1,20 @@
+services:
+  service.mooc.getUser:
+    class: 'contexts/mooc/users/application/GetUser'
+    arguments: ['@service.mooc.postgreUserRepo']
+  
+  service.mooc.getUserByCriteria:
+    class: 'contexts/mooc/users/application/GetUserByCriteria'
+    arguments:  ['@service.mooc.postgreUserRepo', '@logger']
+  
+  service.mooc.createUser:
+    class: 'contexts/mooc/users/application/CreateUser'
+    arguments: ['@service.mooc.postgreUserRepo', '@service.mooc.getUserByCriteria', '@logger', '@uuidhelper']
+  
+  service.mooc.deleteUser:
+    class: 'contexts/mooc/users/application/DeleteUser'
+    arguments: ['@service.mooc.postgreUserRepo', '@service.mooc.getUser', '@logger']
+  
+  service.mooc.updateUser:
+    class: 'contexts/mooc/users/application/UpdateUser'
+    arguments: ['@service.mooc.postgreUserRepo', '@service.mooc.getUserByCriteria', '@logger']

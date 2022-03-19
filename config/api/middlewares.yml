@@ -1,0 +1,11 @@
+services:
+  morganHandler:
+    class: 'apps/shared/middlewares/MorganHandler'
+    arguments: ['@logger']
+
+  authorizationHandler:
+    class: 'apps/shared/middlewares/AuthorizationHandler'
+    arguments: ['@logger']
+
+  httpErrorHanlder:
+    class: 'apps/shared/middlewares/HTTPErrorHandler'

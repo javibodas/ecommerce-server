@@ -1,15 +1,5 @@
-import app from "./app";
-
-/**
- * Start Express server.
- */
-const server = app.listen(app.get("port"), () => {
-  console.log(
-    "  App is running at http://localhost:%d in %s mode",
-    app.get("port"),
-    app.get("env")
-  );
-  console.log("  Press CTRL-C to stop\n");
-});
-
-export default server;
+import Application from "./Application";
+import Container from "./Container";
+ 
+const app = new Application(new Container(), (process.env.server_port ? parseInt(process.env.server_port) : 3001));
+app.listen();

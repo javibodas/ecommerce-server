@@ -1,0 +1,4 @@
+services:
+  service.mooc.postgreUserRepo:
+    class: 'contexts/mooc/users/infrastructure/PostgreUserRepository'
+    arguments: ['@database', '@logger']
