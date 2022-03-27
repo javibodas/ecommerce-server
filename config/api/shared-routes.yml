@@ -5,7 +5,7 @@ services:
       - { name: public-controller }
   
   api.route.oauth:
-    class: 'apps/shared/controllers/auth/AuthController'
+    class: 'apps/shared/controllers/Auth/AuthController'
     arguments: ['@service.mooc.getUserByCriteria', '@logger']
     tags:
       - { name: public-controller }
